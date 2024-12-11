@@ -12,7 +12,7 @@ import java.util.List;
 public class Entreprise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Integer id;
     String nom;
 
     @OneToOne
