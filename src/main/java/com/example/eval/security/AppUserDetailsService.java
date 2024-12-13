@@ -22,7 +22,7 @@ public class AppUserDetailsService implements UserDetailsService {
         Optional<Utilisateur> optionalUtilisateur = utilisateurDao.findByEmail(email);
 
         if (optionalUtilisateur.isEmpty()) {
-            throw new UsernameNotFoundException("Pseudo introuvable");
+            throw new UsernameNotFoundException("Email introuvable");
         }
 
         return new AppUserDetails(optionalUtilisateur.get());

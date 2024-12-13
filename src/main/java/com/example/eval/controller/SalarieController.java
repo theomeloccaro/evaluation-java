@@ -2,10 +2,10 @@ package com.example.eval.controller;
 
 import com.example.eval.dao.ConventionDao;
 import com.example.eval.dao.SalarieDao;
-import com.example.eval.dao.UtilisateurDao;
+import com.example.eval.dao.SalarieDao;
 import com.example.eval.model.Convention;
 import com.example.eval.model.Salarie;
-import com.example.eval.model.Utilisateur;
+import com.example.eval.model.Salarie;
 import com.example.eval.security.IsAdministrateur;
 import com.example.eval.security.IsEntreprise;
 import jakarta.validation.Valid;
@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,37 +23,45 @@ import java.util.Optional;
 public class SalarieController {
 
     @Autowired
-    UtilisateurDao utilisateurDao;
-    @Autowired
-    private SalarieDao salarieDao;
-
+    SalarieDao salarieDao;
     @Autowired
     private ConventionDao conventionDao;
+
+
+    @IsEntreprise
+    @GetMapping("/salaries")
+    public List<Salarie> getAll() {
+
+        return salarieDao.findAll();
+
+    }
+    
+
+    @IsEntreprise
+    @GetMapping("/salarie/{id}")
+    public ResponseEntity<Salarie> get(@PathVariable Integer id) {
+
+        //On vérifie que l'salarie existe bien dans la base de donnée
+        Optional<Salarie> optionalSalarie = salarieDao.findById(id);
+
+        //si l'salarie n'existe pas
+        if(optionalSalarie.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(optionalSalarie.get(),HttpStatus.OK);
+    }
 
     @IsEntreprise
     @PostMapping("/salarie")
     public ResponseEntity<?> add(@RequestBody Salarie salarie) {
-
-        Optional<Convention> optionalConvention = conventionDao.findById(salarie.getConvention().getId());
-        if (optionalConvention.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Convention convention = optionalConvention.get();
-
-        Integer nombreSalariesActuels = salarieDao.countByConventionId(convention.getId());
-
-        if (nombreSalariesActuels >= convention.getSalarie_maximum()) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
         salarieDao.save(salarie);
        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @IsEntreprise
     @DeleteMapping("/salarie/{id}")
-    public ResponseEntity<Utilisateur> delete(@PathVariable Integer id) {
+    public ResponseEntity<Salarie> delete(@PathVariable Integer id) {
 
         salarieDao.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
