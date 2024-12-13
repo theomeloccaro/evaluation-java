@@ -1,4 +1,4 @@
-package com.example.eval.model.dao;
+package com.example.eval.dao;
 
 import com.example.eval.model.Entreprise;
 import org.springframework.data.jpa.repository.JpaRepository;
