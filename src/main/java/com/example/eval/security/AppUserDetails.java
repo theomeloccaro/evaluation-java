@@ -26,7 +26,7 @@ public class AppUserDetails implements UserDetails {
         if (utilisateur.getEntreprise() != null) {
             return List.of(new SimpleGrantedAuthority("ROLE_ENTREPRISE"));
         }
-        return List.of(new SimpleGrantedAuthority("ROLE_ADMINISTRATEUR"));
+        return List.of(new SimpleGrantedAuthority("ROLE_ADMINISTRATEUR"),new SimpleGrantedAuthority("ROLE_ENTREPRISE"));
 
 
     }

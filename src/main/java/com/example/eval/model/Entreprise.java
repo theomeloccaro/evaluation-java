@@ -13,6 +13,8 @@ public class Entreprise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
+    @Column(unique = true)
     String nom;
 
     @OneToOne

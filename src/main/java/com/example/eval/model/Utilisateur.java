@@ -12,6 +12,7 @@ public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @Column(unique = true)
     String email;
     String password;
 

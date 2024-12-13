@@ -1,6 +1,9 @@
 package com.example.eval.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +14,11 @@ public class Salarie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
+    @Size(min = 3, max = 10, message = "Le matricule doit contenir entre 3 et 10 caractères")
     String matricule;
+
+    @NotBlank(message = "Le code barre ne peut pas être vide")
     String code_barre;
 
     @ManyToOne
