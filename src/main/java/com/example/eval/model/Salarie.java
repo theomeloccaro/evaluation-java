@@ -21,6 +21,7 @@ public class Salarie {
     @NotBlank(message = "Le code barre ne peut pas être vide")
     String code_barre;
 
+    @NotNull(message = "Une convention doit être liée au salarié")
     @ManyToOne
     @JoinColumn(name = "convention_id")
     Convention convention;

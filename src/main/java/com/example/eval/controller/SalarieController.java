@@ -26,11 +26,27 @@ public class SalarieController {
     @Autowired
     private SalarieDao salarieDao;
 
+    @Autowired
+    private ConventionDao conventionDao;
+
     @IsEntreprise
     @PostMapping("/salarie")
-    public ResponseEntity<Utilisateur> add(@RequestBody Salarie salarie) {
+    public ResponseEntity<?> add(@RequestBody Salarie salarie) {
 
-       salarieDao.save(salarie);
+        Optional<Convention> optionalConvention = conventionDao.findById(salarie.getConvention().getId());
+        if (optionalConvention.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Convention convention = optionalConvention.get();
+
+        Integer nombreSalariesActuels = salarieDao.countByConventionId(convention.getId());
+
+        if (nombreSalariesActuels >= convention.getSalarie_maximum()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        salarieDao.save(salarie);
        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

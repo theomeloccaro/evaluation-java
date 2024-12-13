@@ -16,6 +16,8 @@ public class Convention {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String nom;
+
+    @Min(value=0, message="La subvention ne peut pas être négative")
     float subvention;
 
     @Min(value=1, message="Le nombre minimum de salarié est de 1")
