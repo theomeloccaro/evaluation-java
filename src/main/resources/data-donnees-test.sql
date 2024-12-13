@@ -1,4 +1,5 @@
 -- Insertion des données dans la table Utilisateur
+-- Mot de passe de tout les utilisateurs : "toto"
 INSERT INTO Utilisateur (email, password) VALUES
 ('admin@example.com', '$2a$10$8I2O3raub9W02hsaPdAaYug5kLIA0JrcfriulOcWd5.5zzUtJDhua'),
 ('entreprise1@example.com', '$2a$10$8I2O3raub9W02hsaPdAaYug5kLIA0JrcfriulOcWd5.5zzUtJDhua'),
