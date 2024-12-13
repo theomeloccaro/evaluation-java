@@ -1,5 +1,6 @@
 package com.example.eval.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,11 @@ public class Entreprise {
 
     @OneToOne
     @JoinColumn(name = "utilisateur_id", unique = true)
+    @JsonIgnore
     Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "entreprise")
+    @JsonIgnore
     List<Convention> conventions;
 
     public Integer getId() {

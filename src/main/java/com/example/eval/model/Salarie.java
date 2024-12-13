@@ -1,5 +1,6 @@
 package com.example.eval.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class Salarie {
     @NotNull(message = "Une convention doit être liée au salarié")
     @ManyToOne
     @JoinColumn(name = "convention_id")
+    @JsonIgnore
     Convention convention;
 
     public String getMatricule() {
